@@ -10,7 +10,6 @@
 # 1. sign = '[symbol_EXIT]' - передан символ для запроса выхода, например, "Y"
 # или строка символов, каждый из которых ведет к "Выходу"
 def check_exit(sign='YyНн', special=None, txt_req='Продолжить? ("Y" - ДА) -> '):
-
     # print(f'sign, special, txt_req -> {(sign, special, txt_req )}')
 
     add = special if not (special is None) else False
@@ -28,8 +27,8 @@ def check_exit(sign='YyНн', special=None, txt_req='Продолжить? ("Y" 
     return False if special is None else inp
 
 
-# Организация ввода и возврат целого или вещественного числа (в т.ч. отрицательное)
-# в заданном диапазоне или выход. C полным контролем корректности
+# Организация ввода и возврат целого, вещественного числа (в т.ч. отрицательное) или строки
+# в заданном диапазоне или выход. С полным контролем корректности
 def get_input(*rang, default=None, txt='Введите число', type_input=int, end=None, not_mess=None):
     borders = '' if len(rang) == 0 or rang[0] is None and rang[-1] is None else \
         f'{rang[0]}' if type_input == tuple else \
@@ -44,17 +43,12 @@ def get_input(*rang, default=None, txt='Введите число', type_input=i
         key_for_cancel = f'введите "{end}"' if not (end is None) else (f'{txt_or}[Enter]' if default is None else '')
         mess_cancel = '' if not_mess else f'Для отказа {key_for_cancel}'
         entered = input(f'{txt_input} {mess_cancel} -> ')
-
-        # if not (end is None) and entered == end or default is None and len(entered) == 0:
         entered = None if not (end is None) and entered == end else \
             (None if default is None else default) if len(entered) == 0 else entered
         if entered is None:
             break
 
         if type_input == tuple:
-
-            # print(f'entered = {entered}')
-            #
             if not (entered in rang[0]):
                 print(f'Введено "{entered}" допустимые значения {rang[0]}. ', end='')
                 txt_input = 'Повторите ввод...'
@@ -83,7 +77,7 @@ def get_input(*rang, default=None, txt='Введите число', type_input=i
     return entered
 
 
-# Ввод нескольких элементов данных (целых чисел, строк) - Возврат введенных чисел в виде кортежа
+# Ввод нескольких элементов данных (целых чисел, строк) - Возврат введенных данных в виде кортежа
 def get_inputs(*inputParams, type_input=int, end=None, not_mess=None):
     tup_iPar = tuple()
     for param in inputParams:
@@ -93,9 +87,9 @@ def get_inputs(*inputParams, type_input=int, end=None, not_mess=None):
             else:
                 rangs = (param[:-1] + (None, None))[3]
             inputParam = get_input(rangs[0], rangs[1], default=rangs[2],
-                                         txt=param[-1], type_input=type_input, end=end)
+                                   txt=param[-1], type_input=type_input, end=end, not_mess=not_mess)
         else:
-            inputParam = get_input(txt=param, type_input=type_input, end=end)
+            inputParam = get_input(txt=param, type_input=type_input, end=end, not_mess=not_mess)
         if inputParam is None:
             break
         tup_iPar += (inputParam,)

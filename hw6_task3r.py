@@ -115,8 +115,8 @@ def is_winnings(board_st):
                 for k in in3: yield i, j, k
 
     # Проверка наличия выигрышного фрагмента по горизонтали и вертикали игрового поля
-    # для каждого кода игрового символа из словаря signs = {0: '.', 1: 'x', -1: 'o'}.
-    # numb: 1-й символ - 'x', код = 1; 2-й символ - 'o', код = -1
+    # для каждого кода игрового символа из словаря signs = {0: '.', 1: 'x', 2: 'o'}.
+    # numb: 1-й символ - 'x', код = 1; 2-й символ - 'o', код = 2
     cod_win = None
     for stat, numb, _ in multi_for((board_st, trans(board_st)), (1, 2), (None, None)):
         cod_win = get_cod(stat, numb)
@@ -275,10 +275,10 @@ while True:
             # 8. уточнить о следующем раунде игры.
             #    "Еще раз?": - если да - переход на шаг-2; если нет - завершить игру.
             special = 'NnТт'
-            select_cont = myl.check_exit(special=special, txt_req='\nЕще партию - нажмите кл. [ Y ]. '
+            select_cont = myl.check_exit(special=special, txt_req='\nЕще партию - нажмите кл. [Y]. '
                                                                   '\nЕсли желаете изменить вариант игры '
                                                                   '(размер доски, кол. "x" или "о" в ряд для победы), '
-                                                                  'нажмите кл. [ N ]ew -> ')
+                                                                  'нажмите кл. [N]ew -> ')
             if select_cont:
                 if isinstance(select_cont, str):
                     new = select_cont in special

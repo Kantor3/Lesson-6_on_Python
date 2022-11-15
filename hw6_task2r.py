@@ -102,12 +102,12 @@ def get_move(player, st, go_last, mov):
         else:                                   # гарантированная стратегия, которая работает при определенных условиях
             rem = count_candies % (n + 1)
             if rem and not mov:                 # Если остаток от деления rem не равен 0 и если это первый ход
-                return rem                      # m % (n + 1) = m - m // (n+1) * (n+1)
+                return rem
             else:
                 _, _, bot_code = tuple(player_ref.keys())
                 opp_code = players_game[bot_code][0]
                 p_last_opp = go_last[opp_code]
-                return n + 1 - p_last_opp
+                return n + 1 - p_last_opp       # В этой строке вся гарантированная стратегия
 
     if player == tuple(player_ref.keys())[2]:   # Играет Bot
         # наделяем бота "интеллектом (мягкая стратегия, когда условия для гарантированной стратегии не выполняются):"
@@ -124,7 +124,7 @@ def get_move(player, st, go_last, mov):
                            txt=f'Ход {player_ref[player][2]}. '
                                f'Сколько конфет снять (по умолчанию {go_default})?', end='-')
 
-    return go                   # отправка хода
+    return go                                   # отправка хода
 
 
 # 6. Обработать ход:
